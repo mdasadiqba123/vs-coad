@@ -1,0 +1,24 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+
+# Load data
+df = pd.read_csv("data.csv")
+
+# Handle missing values
+df = df.fillna(df.mean())
+
+# Encode categorical data
+le = LabelEncoder()
+df["Category"] = le.fit_transform(df["Category"])
+
+# Feature & Target
+X = df.drop("Target", axis=1)
+y = df["Target"]
+
+# Scale features
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
